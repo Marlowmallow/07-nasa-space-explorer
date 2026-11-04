@@ -7,7 +7,9 @@
 
 /* Base page styles */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'public-sans', sans-serif;
+  @import url('https://fonts.cdnfonts.com/css/public-sans');     
+  @import url('https://fonts.googleapis.com/css2?family=Inter');
   background-color: #f1f1f1;
   padding: 20px;
 }
@@ -29,7 +31,7 @@ body {
 }
 
 h1 {
-  font-family: Verdana, sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: bold;
   color: #212121;
 }
@@ -53,9 +55,9 @@ h1 {
 /* Inputs and buttons */
 input[type="date"],
 button {
-  font-family: Arial, sans-serif;
+  font-family: 'public-sans', sans-serif;
   font-weight: normal;
-  color: #666;
+  color: #323a45;
   padding: 10px 15px;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -66,12 +68,12 @@ button {
 
 /* Button specific */
 button {
-  background-color: #d3d3d3;
-  color: black;
+  background-color: #0b3d91;
+  color: white;
   cursor: pointer;
 }
 button:hover {
-  background-color: #bfbfbf;
+  background-color: #061f4a;
 }
 
 /* Stack horizontally on wider screens */
@@ -109,6 +111,11 @@ button:hover {
   display: flex;
   flex-direction: column;
   cursor: pointer;
+  transition: scale 0.2s ease-in-out;
+}
+
+.gallery-item:hover {
+  scale: 1.05;
 }
 
 /* Three columns on wider screens */
