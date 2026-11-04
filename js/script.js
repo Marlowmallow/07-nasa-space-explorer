@@ -48,8 +48,8 @@ async function getPhotos(startDate, endDate) {
   while (page <= totalPages) {
     const url = new URL(endpoint);
     // The WordPress REST API uses `after` and `before` for date filtering;
-    url.searchParams.set('date_from', `${startDate}`);
-    url.searchParams.set('date_to', `${endDate}`);
+    url.searchParams.set('date_from', toLegacyDate(startDate));
+    url.searchParams.set('date_to', toLegacyDate(endDate));
     url.searchParams.set('per_page', perPage);
     url.searchParams.set('page', page);
 
@@ -73,6 +73,22 @@ async function getPhotos(startDate, endDate) {
     if (!Array.isArray(pagePhotos)) {
       throw new Error('The API returned data in an unexpected format.');
     }
+
+    // Save this page's entries so they can be displayed later.
+    photos.push(...pagePhotos);
+
+    // Use the API's page count, or continue until a page is not full.
+    const pagesFromHeader = response.headers.get('X-WP-TotalPages');
+
+    if (pagesFromHeader) {
+      totalPages = Number(pagesFromHeader);
+    } else if (pagePhotos.length === perPage) {
+      totalPages += 1;
+    } else {
+      totalPages = page;
+    }
+
+    page += 1;
   }
 
   return photos;
@@ -128,4 +144,9 @@ function showMessage(message) {
   paragraph.className = 'placeholder';
   paragraph.textContent = message;
   gallery.replaceChildren(paragraph);
+}
+
+// Convert YYYY-MM-DD to the API's required YYMMDD format.
+function toLegacyDate(date) {
+  return date.slice(2).replaceAll('-', '');
 }
