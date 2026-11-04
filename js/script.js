@@ -3,6 +3,11 @@ const startInput = document.getElementById('startDate');
 const endInput = document.getElementById('endDate');
 const searchButton = document.getElementById('Searchbtn');
 const gallery = document.getElementById('gallery');
+const photoModal = document.getElementById('photoModal');
+const modalImage = document.getElementById('modalImage');
+const modalTitle = document.getElementById('modalTitle');
+const modalDate = document.getElementById('modalDate');
+const modalExplanation = document.getElementById('modalExplanation');
 
 // Set the date pickers to a recent range and limit them to valid APOD dates.
 setupDateInputs(startInput, endInput);
@@ -95,13 +100,17 @@ async function getPhotos(startDate, endDate) {
 }
 
 function displayPhotos(photos, startDate, endDate) {
-  // Keep the selected range and only show entries that have an image URL.
-  const imagePhotos = photos.filter((photo) => (
-    photo.date >= startDate
-    && photo.date <= endDate
-    && photo.media_type === 'image'
-    && photo.hdurl
-  ));
+  // Keep matching images and sort them from earliest date to latest.
+  const imagePhotos = photos
+    .filter((photo) => (
+      photo.date >= startDate
+      && photo.date <= endDate
+      && photo.media_type === 'image'
+      && photo.hdurl
+    ))
+    .sort((firstPhoto, secondPhoto) => (
+      firstPhoto.date.localeCompare(secondPhoto.date)
+    ));
 
   gallery.replaceChildren();
 
@@ -128,7 +137,17 @@ function displayPhotos(photos, startDate, endDate) {
     const explanation = document.createElement('p');
     explanation.textContent = getPlainText(photo.explanation);
 
-    card.append(image, title, date, explanation);
+    // Show the full photo details when the gallery card is clicked.
+    card.addEventListener('click', () => {
+      modalImage.src = photo.hdurl;
+      modalImage.alt = photo.alt || photo.title;
+      modalTitle.textContent = photo.title;
+      modalDate.textContent = photo.date;
+      modalExplanation.textContent = getPlainText(photo.explanation);
+      photoModal.showModal();
+    });
+
+    card.append(image, title, date);
     gallery.append(card);
   });
 }
