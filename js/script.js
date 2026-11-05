@@ -180,3 +180,17 @@ if ('serviceWorker' in navigator) {
       console.error('Service Worker registration failed:', error));
   });
 }
+
+const offlineBanner = document.getElementById('offline-banner');
+
+function updateOnlineStatus() {
+  if (navigator.onLine) {
+    offlineBanner.classList.add('hidden');
+  } else {
+    offlineBanner.classList.remove('hidden');
+  }
+}
+
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
+updateOnlineStatus();

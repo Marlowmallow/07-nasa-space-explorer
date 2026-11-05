@@ -186,3 +186,21 @@ button:hover {
 #photoModal p {
   margin-top: 10px;
 }
+
+.offline-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: linear-gradient(90deg, #fc3d21, #d42e14);
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 14px;
+  z-index: 200;
+}
+
+.offline-banner.hidden {
+  display: none;
+}
