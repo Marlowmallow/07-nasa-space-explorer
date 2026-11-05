@@ -207,15 +207,22 @@ window.addEventListener('beforeinstallprompt', (event) => {
 });
 
 installYesBtn.addEventListener('click', async () => {
-  installBanner.classList.add('hidden');
   if (!deferredInstallPrompt) return;
 
-  deferredInstallPrompt.prompt();
-  const { outcome } = await deferredInstallPrompt.userChoice;
-  console.log(`User response to the install prompt: ${outcome}`);
+  const installPrompt = deferredInstallPrompt;
   deferredInstallPrompt = null;
+  installBanner.classList.add('hidden');
+
+  installPrompt.prompt();
+  const { outcome } = await installPrompt.userChoice;
+  console.log(`User response to the install prompt: ${outcome}`);
 });
 
 installNoBtn.addEventListener('click', () => {
+  installBanner.classList.add('hidden');
+});
+
+window.addEventListener('appinstalled', () => {
+  deferredInstallPrompt = null;
   installBanner.classList.add('hidden');
 });

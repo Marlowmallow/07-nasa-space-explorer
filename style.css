@@ -201,6 +201,35 @@ button:hover {
   z-index: 200;
 }
 
-.offline-banner.hidden {
+.install-banner {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  left: 16px;
+  z-index: 300;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  border-radius: 8px;
+  background: white;
+  color: #212121;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.install-banner p {
+  flex: 1 1 100%;
+}
+
+.install-banner button {
+  width: auto;
+}
+
+.install-no {
+  background-color: #5f6368;
+}
+
+.hidden {
   display: none;
 }
