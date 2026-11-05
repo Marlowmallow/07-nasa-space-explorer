@@ -194,3 +194,28 @@ function updateOnlineStatus() {
 window.addEventListener('online', updateOnlineStatus);
 window.addEventListener('offline', updateOnlineStatus);
 updateOnlineStatus();
+
+let deferredInstallPrompt = null;
+const installBanner = document.getElementById('install-banner');
+const installYesBtn = document.getElementById('install-yes');
+const installNoBtn = document.getElementById('install-no');
+
+window.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  installBanner.classList.remove('hidden');
+});
+
+installYesBtn.addEventListener('click', async () => {
+  installBanner.classList.add('hidden');
+  if (!deferredInstallPrompt) return;
+
+  deferredInstallPrompt.prompt();
+  const { outcome } = await deferredInstallPrompt.userChoice;
+  console.log(`User response to the install prompt: ${outcome}`);
+  deferredInstallPrompt = null;
+});
+
+installNoBtn.addEventListener('click', () => {
+  installBanner.classList.add('hidden');
+});
