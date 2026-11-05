@@ -204,7 +204,7 @@ button:hover {
 .install-banner {
   position: fixed;
   right: 16px;
-  bottom: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom));
   left: 16px;
   z-index: 300;
   display: flex;
@@ -228,6 +228,13 @@ button:hover {
 
 .install-no {
   background-color: #5f6368;
+}
+
+@media (max-width: 599px) {
+  .install-banner button {
+    flex: 1 1 auto;
+    min-height: 44px;
+  }
 }
 
 .hidden {
