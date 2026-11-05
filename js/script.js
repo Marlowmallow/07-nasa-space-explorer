@@ -207,11 +207,11 @@ window.addEventListener('beforeinstallprompt', (event) => {
 });
 
 installYesBtn.addEventListener('click', async () => {
+  installBanner.classList.add('hidden');
   if (!deferredInstallPrompt) return;
 
   const installPrompt = deferredInstallPrompt;
   deferredInstallPrompt = null;
-  installBanner.classList.add('hidden');
 
   installPrompt.prompt();
   const { outcome } = await installPrompt.userChoice;
