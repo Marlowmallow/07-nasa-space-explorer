@@ -192,7 +192,7 @@ button:hover {
   top: 0;
   left: 0;
   right: 0;
-  background-color: linear-gradient(90deg, #fc3d21, #d42e14);
+  background-color: #d42e14;
   color: white;
   text-align: center;
   padding: 10px;
